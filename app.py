@@ -1,13 +1,10 @@
 #All import statements
-from ctypes import alignment
-from tkinter import N
 import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from datetime import date
-from xml.dom.minidom import CharacterData
 alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
