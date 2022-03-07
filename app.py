@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
+from altair_data_server import data_server
 import dash_bootstrap_components as dbc
 from datetime import date
 alt.data_transformers.enable('data_server')
