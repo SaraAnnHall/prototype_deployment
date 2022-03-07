@@ -1,5 +1,9 @@
-dash
-dash_bootstrap_components
+ctypes
+tkinter
+pandas
 altair
-gunicorn
-vega_datasets
+dash
+dash.dependencies
+dash_bootstrap_components
+datetime
+xml.dom.minidom
