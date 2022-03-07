@@ -11,7 +11,7 @@ from xml.dom.minidom import CharacterData
 alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
-
+server = app.server 
 
 def getSpotifyData():
     """Retrieves Spotify data from Github and performs the necessary wrangling. 
