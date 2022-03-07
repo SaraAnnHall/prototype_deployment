@@ -1,4 +1,3 @@
-ctypes
 tkinter
 pandas
 altair
