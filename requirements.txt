@@ -1,6 +1,5 @@
 pandas
 altair
 dash
-dash.dependencies
 dash_bootstrap_components
 xml.dom.minidom
