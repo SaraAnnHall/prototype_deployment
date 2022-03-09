@@ -6,7 +6,6 @@ from dash.dependencies import Input, Output
 from altair_data_server import data_server
 import dash_bootstrap_components as dbc
 from datetime import date
-alt.data_transformers.enable('data_server')
 alt.data_transformers.disable_max_rows()
 
 def getSpotifyData():
@@ -22,6 +21,7 @@ def getSpotifyData():
                "Energy", "Key", "Loudness", "Mode", "Speechiness", 
                "Acousticness", "Instrumentalness", "Liveness", "Valence", 
               "Tempo", "Duration"]
+    data = data.drop(["Name"])
     data['Playlist Genre'] = data['Playlist Genre'].str.title()
     data['Playlist Subgenre'] = data['Playlist Subgenre'].str.title()
     mode = {1 : 'Major', 0:'Minor'}
@@ -112,6 +112,7 @@ def pop_vs_year(data):
 
 # Read in global data
 data = getSpotifyData()
+topSongs = pd.read_csv('top_songs.csv', sep = '\t')
 
 # Setup app and layout/frontend
 app = Dash(__name__,  external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -202,10 +203,10 @@ top10=html.Div([dbc.Row([html.Div([
 )
 
 row1=html.Div([dbc.Row([
-        dbc.Col(html.Iframe(
-                id = 'top_n_plot', srcDoc= top_n_by_popularity(data,ycol='Name'),
-                style={'border-width': '0', 'width': '100%', 'height': '300px'}, 
-        ), md = 6),
+        # dbc.Col(html.Iframe(
+        #         id = 'top_n_plot', srcDoc= top_n_by_popularity(data,ycol='Name'),
+        #         style={'border-width': '0', 'width': '100%', 'height': '300px'}, 
+        # ), md = 6),
         dbc.Col(html.Iframe(
                 id = 'timecountplot', srcDoc = count_vs_year(data),
                 style={'border-width': '0', 'width': '100%', 'height': '300px'}
@@ -235,7 +236,7 @@ app.layout = dbc.Container([header,genredrop,releasedate,top10,row1,row2])
 
 #Set up callbacks/backend
 @app.callback(
-    Output('top_n_plot', 'srcDoc'),
+    # Output('top_n_plot', 'srcDoc'),
     Output('timecountplot', 'srcDoc'),
     Output('subgenreplot','srcDoc'),
     Output('popvsyear','srcDoc'),
@@ -254,7 +255,7 @@ def plot_altair(genre_widget,ycol,release_year):
     """    
     newData = data.loc[data['Playlist Genre'].isin(genre_widget)]
     newData = newData.loc[(newData['Year'] >= release_year[0]) & (newData['Year'] <= release_year[1])]
-    return top_n_by_popularity(newData,ycol), count_vs_year(newData), plot_subgenres(newData), pop_vs_year(newData)
+    return count_vs_year(newData), plot_subgenres(newData), pop_vs_year(newData)
 
 
 #Run in debug mode if it's running as the main program. 
